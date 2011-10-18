@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>brooklyn-examples</artifactId>
+    <name>Brooklyn Examples</name>
+    <groupId>brooklyn-examples</groupId>
+    <version>4.0.0</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>brooklyn</groupId>
+            <artifactId>brooklyn-launcher</artifactId>
+            <version>0.1.0-M1</version>
+            <classifier>with-dependencies</classifier>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>cloudsoft-maven-repository</id>
+            <url>http://developer.cloudsoftcorp.com/download/maven2/</url> </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
