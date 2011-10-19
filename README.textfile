@@ -1,0 +1,18 @@
+h1. Brooklyn Example Projects
+
+This repository contains several simple examples for Brooklyn.  These are:
+
+* *Starting a Tomcat Server*: How to start and manage a Tomcat Server with Brooklyn
+* *Starting a Tomcat Cluster*: How to start and manage a Tomcat Cluster with Brooklyn
+* *Starting a Tomcat Cluster with NGINX*: How to start and manage a Tomcat Cluster alongside an NGINX instance whereby each Tomcat Server in the cluster is registered with the NGINX instance
+* *Starting a Multi-Location Tomcat Fabric*: How to start and manage a Tomcat Fabric with Brooklyn
+* *Starting in AWS-EC2*: Code demonstrating how to start a Tomcat Server in EU-West
+
+h2. Building the examples
+Clone the repository and build the examples:
+<pre><code>git clone https://github.com/cloudsoft/brooklyn-examples.git
+cd brooklyn-examples
+mvn clean install</code>
+</pre>
+
+This will pull in required dependencies and build the examples for use.
