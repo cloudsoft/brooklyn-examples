@@ -5,7 +5,6 @@ import brooklyn.entity.basic.AbstractApplication
 import brooklyn.entity.group.Cluster
 import brooklyn.entity.group.DynamicFabric
 import brooklyn.entity.webapp.DynamicWebAppCluster
-import brooklyn.entity.webapp.JavaWebApp
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.Location
@@ -39,7 +38,7 @@ class TomcatFabricApp extends AbstractApplication {
                 newEntity : webClusterFactory,
                 this)
         
-        fabric.setConfig(JavaWebApp.WAR, "/path/to/booking-mvc.war")
+        fabric.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
         fabric.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
         fabric.setConfig(Cluster.INITIAL_SIZE, 2)
     }

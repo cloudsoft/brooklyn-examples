@@ -2,12 +2,10 @@ package brooklyn.example
 
 import brooklyn.entity.basic.AbstractApplication
 import brooklyn.entity.webapp.DynamicWebAppCluster
-import brooklyn.entity.webapp.JavaWebApp
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.Location
 import brooklyn.location.basic.LocalhostMachineProvisioningLocation
-
 
 class TomcatClusterApp extends AbstractApplication {
     
@@ -26,6 +24,6 @@ class TomcatClusterApp extends AbstractApplication {
                 newEntity: { properties -> new TomcatServer(properties) },
                 owner:this)
         cluster.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
-        cluster.setConfig(JavaWebApp.WAR, "/path/to/booking-mvc.war")
+        cluster.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
     }
 }

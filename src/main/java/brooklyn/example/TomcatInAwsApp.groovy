@@ -1,7 +1,6 @@
 package brooklyn.example
 
 import brooklyn.entity.basic.AbstractApplication
-import brooklyn.entity.webapp.JavaWebApp
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.basic.jclouds.JcloudsLocation
@@ -38,7 +37,7 @@ class TomcatInAwsApp extends AbstractApplication {
 
     public void init() {
         def tomcat = new TomcatServer(owner:this)
-        tomcat.setConfig(JavaWebApp.WAR, "/path/to/booking-mvc.war")
+        tomcat.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
         tomcat.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
     }
 }

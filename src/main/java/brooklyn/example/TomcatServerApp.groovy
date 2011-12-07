@@ -1,7 +1,6 @@
 package brooklyn.example
 
 import brooklyn.entity.basic.AbstractApplication
-import brooklyn.entity.webapp.JavaWebApp
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.Location
@@ -21,6 +20,6 @@ class TomcatServerApp extends AbstractApplication {
     public void init() {
         def tomcat = new TomcatServer(owner:this)
         tomcat.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
-        tomcat.setConfig(TomcatServer.WAR, "/path/to/booking-mvc.war")
+        tomcat.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
     }
 }
