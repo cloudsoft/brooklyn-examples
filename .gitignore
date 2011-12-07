@@ -1,1 +1,15 @@
 target/
+test-output/
+activemq-data/
+.metadata/
+.settings/
+.project
+.classpath
+
+\#*\#
+*~
+.DS_Store
+.idea/
+*.iml
+*.log
+
