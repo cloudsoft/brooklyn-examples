@@ -15,7 +15,7 @@ class TomcatClusterApp extends AbstractApplication {
 	DynamicWebAppCluster cluster = new DynamicWebAppCluster(this,
 		initialSize: 2,
 		newEntity: { properties -> new TomcatServer(properties) },
-		http: 8080, war: "/path/to/booking-mvc.war")
+		httpPort: 8080, war: "/path/to/booking-mvc.war")
 
 	public static void main(String[] argv) {
 		TomcatClusterApp demo = new TomcatClusterApp(displayName : "tomcat cluster example")

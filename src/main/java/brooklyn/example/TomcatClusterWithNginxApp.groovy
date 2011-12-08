@@ -23,7 +23,7 @@ class TomcatClusterWithNginxApp extends AbstractApplication {
 		owner : this,
 		initialSize: 2,
 		newEntity: { properties -> new TomcatServer(properties) },
-		http: 8080, war: "/path/to/booking-mvc.war")
+		httpPort: 8080, war: "/path/to/booking-mvc.war")
 
     public static void main(String[] argv) {
         TomcatClusterWithNginxApp demo = new TomcatClusterWithNginxApp(displayName : "tomcat cluster with nginx example")

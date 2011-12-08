@@ -27,8 +27,8 @@ class TomcatFabricApp extends AbstractApplication {
 			newEntity : webClusterFactory,
 			this,
 			initialSize: 2,
-			http: 8080, war: "/path/to/booking-mvc.war")
-        
+			httpPort: 8080, war: "/path/to/booking-mvc.war")
+	
     public static void main(String[] argv) {
         TomcatFabricApp demo = new TomcatFabricApp(displayName : "tomcat example")
         BrooklynLauncher.manage(demo)

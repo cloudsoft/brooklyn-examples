@@ -6,11 +6,10 @@ import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.Location
 import brooklyn.location.basic.LocalhostMachineProvisioningLocation
 
-
 class TomcatServerApp extends AbstractApplication {
 
-	def tomcat = new TomcatServer(this, http: 8080, war: "/path/to/booking.war")
-
+	def tomcat = new TomcatServer(this, httpPort: 8080, war: "/path/to/booking-mvc.war")
+	
 	public static void main(String... args) {
 		TomcatServerApp demo = new TomcatServerApp(displayName : "tomcat server example")
 		BrooklynLauncher.manage(demo)
