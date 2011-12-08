@@ -4,26 +4,39 @@ import brooklyn.entity.basic.AbstractApplication
 import brooklyn.entity.webapp.DynamicWebAppCluster
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
-import brooklyn.location.Location
-import brooklyn.location.basic.LocalhostMachineProvisioningLocation
+import brooklyn.location.basic.jclouds.JcloudsLocation
+import brooklyn.location.basic.jclouds.JcloudsLocationFactory
 
 class TomcatClusterApp extends AbstractApplication {
-    
-    public static void main(String[] argv) {
-        TomcatClusterApp demo = new TomcatClusterApp(displayName : "tomcat cluster example")
-        demo.init()
-        BrooklynLauncher.manage(demo)
-        
-        Location loc = new LocalhostMachineProvisioningLocation(count: 4)
-        demo.start([loc])
-    }
+	
+	//For this to successfully run on AWS you will need to replace the placeholder credentials; indentity, credential,
+	//sshPrivateKey and sshPublicKey. You will also need to specify your AMI image ID and a security group.
 
-    public void init() {
-        DynamicWebAppCluster cluster = new DynamicWebAppCluster(
-                initialSize: 1,
-                newEntity: { properties -> new TomcatServer(properties) },
-                owner:this)
-        cluster.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
-        cluster.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
-    }
+	DynamicWebAppCluster cluster = new DynamicWebAppCluster(this,
+		initialSize: 2,
+		newEntity: { properties -> new TomcatServer(properties) },
+		http: 8080, war: "/path/to/booking-mvc.war")
+
+	public static void main(String[] argv) {
+		TomcatClusterApp demo = new TomcatClusterApp(displayName : "tomcat cluster example")
+		BrooklynLauncher.manage(demo)
+
+		JcloudsLocationFactory locFactory = new JcloudsLocationFactory([
+					provider : "aws-ec2",
+					identity : "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+					credential : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+					sshPrivateKey : new File("/home/bob/.ssh/id_rsa.private"),
+					sshPublicKey : new File("/home/bob/.ssh/id_rsa.pub")
+				])
+
+		JcloudsLocation loc = locFactory.newLocation("us-west-1")
+
+		loc.setTagMapping([
+					(TomcatServer.class.getName()):[
+						imageId:"us-west-1/ami-25df8e60",
+						securityGroups:["my-security-group"]]])
+
+		demo.start([loc])
+	}
 }
+

@@ -6,20 +6,15 @@ import brooklyn.launcher.BrooklynLauncher
 import brooklyn.location.Location
 import brooklyn.location.basic.LocalhostMachineProvisioningLocation
 
-class TomcatServerApp extends AbstractApplication {
-    
-    public static void main(String[] argv) {
-        TomcatServerApp demo = new TomcatServerApp(displayName : "tomcat server example")
-        demo.init()
-        BrooklynLauncher.manage(demo)
-        
-        Location loc = new LocalhostMachineProvisioningLocation(count: 1)
-        demo.start([loc])
-    }
 
-    public void init() {
-        def tomcat = new TomcatServer(owner:this)
-        tomcat.setConfig(TomcatServer.HTTP_PORT.configKey, 8080)
-        tomcat.setConfig(TomcatServer.ROOT_WAR, "/path/to/booking-mvc.war")
-    }
+class TomcatServerApp extends AbstractApplication {
+
+	def tomcat = new TomcatServer(this, http: 8080, war: "/path/to/booking.war")
+
+	public static void main(String... args) {
+		TomcatServerApp demo = new TomcatServerApp(displayName : "tomcat server example")
+		BrooklynLauncher.manage(demo)
+		demo.start([new LocalhostMachineProvisioningLocation(count: 1)])
+	}
+
 }
