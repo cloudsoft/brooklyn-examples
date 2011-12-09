@@ -12,10 +12,12 @@ class TomcatClusterApp extends AbstractApplication {
 	//For this to successfully run on AWS you will need to replace the placeholder credentials; indentity, credential,
 	//sshPrivateKey and sshPublicKey. You will also need to specify your AMI image ID and a security group.
 
-	DynamicWebAppCluster cluster = new DynamicWebAppCluster(this,
+	DynamicWebAppCluster cluster = new DynamicWebAppCluster(
+		owner : this,
 		initialSize: 2,
 		newEntity: { properties -> new TomcatServer(properties) },
-		httpPort: 8080, war: "/path/to/booking-mvc.war")
+		httpPort: 8080, 
+		war: "/path/to/booking-mvc.war")
 
 	public static void main(String[] argv) {
 		TomcatClusterApp demo = new TomcatClusterApp(displayName : "tomcat cluster example")
@@ -24,19 +26,13 @@ class TomcatClusterApp extends AbstractApplication {
 		JcloudsLocationFactory locFactory = new JcloudsLocationFactory([
 					provider : "aws-ec2",
 					identity : "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-					credential : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-					sshPrivateKey : new File("/home/bob/.ssh/id_rsa.private"),
-					sshPublicKey : new File("/home/bob/.ssh/id_rsa.pub")
+                    credential : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    sshPrivateKey : new File("/home/bob/.ssh/id_rsa.private"),
+                    sshPublicKey : new File("/home/bob/.ssh/id_rsa.pub"),
+					securityGroups:["brooklyn-all"]
 				])
 
 		JcloudsLocation loc = locFactory.newLocation("us-west-1")
-
-		loc.setTagMapping([
-					(TomcatServer.class.getName()):[
-						imageId:"us-west-1/ami-25df8e60",
-						securityGroups:["my-security-group"]]])
-
 		demo.start([loc])
 	}
 }
-

@@ -2,13 +2,12 @@ package brooklyn.example
 
 import brooklyn.entity.basic.AbstractApplication
 import brooklyn.entity.basic.Attributes
-import brooklyn.entity.group.Cluster
 import brooklyn.entity.proxy.nginx.NginxController
 import brooklyn.entity.webapp.ControlledDynamicWebAppCluster
 import brooklyn.entity.webapp.tomcat.TomcatServer
 import brooklyn.launcher.BrooklynLauncher
-import brooklyn.location.Location
-import brooklyn.location.basic.LocalhostMachineProvisioningLocation
+import brooklyn.location.basic.jclouds.JcloudsLocation
+import brooklyn.location.basic.jclouds.JcloudsLocationFactory
 
 class TomcatClusterWithNginxApp extends AbstractApplication {
 	
@@ -18,18 +17,27 @@ class TomcatClusterWithNginxApp extends AbstractApplication {
 		portNumberSensor : Attributes.HTTP_PORT)
 
 	ControlledDynamicWebAppCluster cluster = new ControlledDynamicWebAppCluster(
+		owner : this,
 		controller : nginxController,
 		webServerFactory : { properties -> new TomcatServer(properties) },
-		owner : this,
 		initialSize: 2,
-		newEntity: { properties -> new TomcatServer(properties) },
 		httpPort: 8080, war: "/path/to/booking-mvc.war")
 
     public static void main(String[] argv) {
         TomcatClusterWithNginxApp demo = new TomcatClusterWithNginxApp(displayName : "tomcat cluster with nginx example")
         BrooklynLauncher.manage(demo)
         
-        Location loc = new LocalhostMachineProvisioningLocation(count: 3)
+		JcloudsLocationFactory locFactory = new JcloudsLocationFactory([
+					provider : "aws-ec2",
+					identity : "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    credential : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                    sshPrivateKey : new File("/home/bob/.ssh/id_rsa.private"),
+                    sshPublicKey : new File("/home/bob/.ssh/id_rsa.pub"),
+					securityGroups:["brooklyn-all"]
+				])
+
+		JcloudsLocation loc = locFactory.newLocation("us-west-1")
+
         demo.start([loc])
     }
 }

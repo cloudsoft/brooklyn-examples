@@ -8,7 +8,7 @@ import brooklyn.location.basic.LocalhostMachineProvisioningLocation
 
 class TomcatServerApp extends AbstractApplication {
 
-	def tomcat = new TomcatServer(this, httpPort: 8080, war: "/path/to/booking-mvc.war")
+	def tomcat = new TomcatServer(owner: this, httpPort: 8080, war: "/path/to/booking-mvc.war")
 	
 	public static void main(String... args) {
 		TomcatServerApp demo = new TomcatServerApp(displayName : "tomcat server example")
