@@ -37,7 +37,7 @@ class TomcatFabricApp extends AbstractApplication {
                     credential : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                     sshPrivateKey : new File("/home/bob/.ssh/id_rsa.private"),
                     sshPublicKey : new File("/home/bob/.ssh/id_rsa.pub"),
-					securityGroups:["brooklyn-all"]
+					securityGroups:["my-security-group"]
 				])
 
 		JcloudsLocation loc = locFactory.newLocation("us-west-1")
