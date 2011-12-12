@@ -9,14 +9,19 @@
         <dependency>
             <groupId>brooklyn</groupId>
             <artifactId>brooklyn-launcher</artifactId>
-            <version>0.1.0-M1</version>
+            <version>0.2.0-RC2</version>
             <classifier>with-dependencies</classifier>
         </dependency>
     </dependencies>
     <repositories>
         <repository>
-            <id>cloudsoft-maven-repository</id>
-            <url>http://developer.cloudsoftcorp.com/download/maven2/</url> </repository>
+            <id>cloudsoft-public-repository</id>
+            <url>http://developer.cloudsoftcorp.com/download/maven2/</url>
+        </repository>
+        <repository>
+            <id>cloudsoft-local-repository</id>
+            <url>http://ccweb.cloudsoftcorp.com/maven/libs-release-local/</url>
+        </repository>
     </repositories>
     <build>
         <plugins>
@@ -25,6 +30,5 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
 
