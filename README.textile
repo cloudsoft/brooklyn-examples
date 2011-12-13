@@ -16,3 +16,8 @@ mvn clean install</code>
 </pre>
 
 This will pull in required dependencies and build the examples for use.
+
+Just add the '-with-dependencies' jar to your classpath to run an example, once modified with your credentials, e.g.::
+
+<pre><code>java -cp target/brooklyn-examples-*-with-dependencies.jar brooklyn.example.TomcatClusterApp</code>
+</pre>
